@@ -184,14 +184,16 @@ funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
     //since the operations later on are based on data2 and extended aswell as ALUSrc ALU will performed on them first
     ALU(data2,extended_value,ALUrc,*AlUresult,*Zero); 
+    
     funct=*Zero; //saving the value for the use of determining the future operation
+    
     //determining the values to be put into main ALU function using ALSUrc 
     
     switch(funct):
-        case 0:
+        case 0://for the case of ALCrc begetting 0
             ALU(data1,data2,ALUp,*AlUresult,*Zero);
             break;
-        case 1:
+        case 1://for the case of ALCrc begetting 1
             ALU(data1,extended_value,ALUp,*AlUresult,*Zero);
             break;
             
