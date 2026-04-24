@@ -182,6 +182,8 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned
 funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
+    //determining the values to be put into main ALU function
+    
 }
 /* Read / Write Memory */
 /* 10 Points */
