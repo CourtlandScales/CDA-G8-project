@@ -2,7 +2,7 @@
 CDA 3103C: Computer Logic and Organization
 Dr. John Aedo
 Spring 2026
-Authors: Courtland Scales, 
+Authors: Courtland Scales, Marco Morris
 Programming language: C
 Date: 4/8/2026 
 */
@@ -159,8 +159,8 @@ int instruction_decode(unsigned op,struct_controls *controls)
 void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigned
 *data2)
 {
-   *data1 = Reg[r1];
-   *data2 = Reg[r2]; 
+   *data1 = Reg[r1]; //value from memory to register
+   *data2 = Reg[r2]; //value from memory to register
     
 }
 /* Sign Extend */
@@ -168,7 +168,7 @@ void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigne
 void sign_extend(unsigned offset,unsigned *extended_value)
 {
     //first extending offset with leading zeros
-    if(((offset >> 15) & 1)) //if the offset is negative 
+    if(((offset >> 15) & 1)) //using AND to check if the offset is signed to be - or +
     {
         *extended_value= 0xFFFF0000 | offset; //setting the first like 16 bits to 1 
     } 
@@ -182,7 +182,8 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned
 funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
-    //determining the values to be put into main ALU function
+    //determining the values to be put into main ALU function using ALSUrc 
+    
 
     //check if ALUresult is empty 
     if(ALUresult==NULL)
