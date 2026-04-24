@@ -182,21 +182,24 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned
 funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
+    //since the operations later on are based on data2 and extended aswell as ALUSrc ALU will performed on them first
+    ALU(data2,extended_value,ALUrc,*AlUresult,*Zero); 
+    funct=*Zero; //saving the value for the use of determining the future operation
     //determining the values to be put into main ALU function using ALSUrc 
-    switch(ALUSrc):
+    
+    switch(funct):
         case 0:
-            ALU(data1,data2,ALUp,funt,*Zero); 
+            ALU(data1,data2,ALUp,*AlUresult,*Zero);
             break;
-
-    //check if ALUresult is empty 
+        case 1:
+            ALU(data1,extended_value,ALUp,*AlUresult,*Zero);
+            break;
+            
+    //check if ALUresult is empty/ if there was a halt 
     if(ALUresult==NULL)
-    {
         return 1;
-    }
     else
-    {
         return 0;
-    }
     
 }
 /* Read / Write Memory */
