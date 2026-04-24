@@ -167,6 +167,14 @@ void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigne
 /* 10 Points */
 void sign_extend(unsigned offset,unsigned *extended_value)
 {
+    if(offset%2=0) //if the offset is negative 
+    {
+        *extended_value=(1<<8)|(1<<7)|(1<<6)|(1<<5)|(1<<6)&offset; //setting the first like 16 bits to 1 
+    }
+    else //if the offset is positive 
+    {
+        *extended_value=0xFFFF&offset; //setting the new set of bits in the 32 bit to zero 
+    }
 }
 /* ALU operations */
 /* 10 Points */
