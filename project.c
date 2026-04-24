@@ -183,6 +183,16 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
 funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
     //determining the values to be put into main ALU function
+
+    //check if ALUresult is empty 
+    if(ALUresult==NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
     
 }
 /* Read / Write Memory */
