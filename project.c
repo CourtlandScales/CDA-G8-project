@@ -169,7 +169,7 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 {
     if(offset%2=0) //if the offset is negative 
     {
-        *extended_value= F0 &boffset; //setting the first like 16 bits to 1 
+        *extended_value= F0 | boffset; //setting the first like 16 bits to 1 
     } 
     else //if the offset is positive 
     {
