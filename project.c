@@ -97,30 +97,56 @@ int instruction_decode(unsigned op,struct_controls *controls)
     (*controls).RegWrite = 0;
     
     switch(op){
-        case 0: 
+        case 0: //add, sub, and, or, slt, & sltu Appendix A F1
             (*controls).RegDst = 1;
             (*controls).ALUOp = 7;
             (*controls).RegWrite = 1;
             break;
-        case 2:
+        case 2: // jump Appendix A F1
             (*controls).Jump = 1;
             (*controls).MemtoReg = 2;
             (*controls).ALUSrc = 2;
-            (*controls).RegWrite = 2;
+            (*controls).ALUOp = 2;
+            (*controls).RegWrite = 0;
             break;
-        case 4:
+        case 4: // beq Appendix A F1
             (*controls).RegDst = 2;     
             (*controls).Branch = 1;     
             (*controls).MemtoReg = 2;   
             (*controls).ALUOp = 1;      
             break;
-        case 8:
+        case 8: // addi Appendix A F1
             (*controls).ALUSrc = 1;
             (*controls).RegWrite = 1;
             break;
-        case 9:
+        case 9: // addiu Appendix A F1 
             (*controls).ALUSrc = 1;
             (*controls).RegWrite = 1;
+            (*controls).ALUOp = 0;
+            break;
+        case 13: // ori Appendix A F1
+            (*controls).RegWrite = 1;
+            (*controls).ALUSrc = 1;
+            (*controls).ALUOp = 5;
+            break;
+        case 15: // lui Appendix A F1
+            (*controls).RegWrite = 1;
+            (*controls).ALUSrc = 1;
+            (*controls).ALUOp = 6;
+            break;
+        case 35: // lw Appendix A F1
+            (*controls).ALUOp = 0;
+            (*controls).RegWrite = 1;
+            (*controls).MemRead = 1;
+            (*controls).ALUSrc = 1;
+            (*controls).MemtoReg = 1;
+            break;
+        case 43: // sw Appendix A F1
+            (*controls).MemWrite = 1;
+            (*controls).ALUSrc = 1;
+            (*controls).RegDst = 2;
+            (*controls).MemtoReg = 2;
+            (*controls).ALUOp = 0;
             break;
         default:
             return 1;
@@ -133,6 +159,9 @@ int instruction_decode(unsigned op,struct_controls *controls)
 void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigned
 *data2)
 {
+   *data1 = Reg[r1];
+   *data2 = Reg[r2]; 
+    
 }
 /* Sign Extend */
 /* 10 Points */
