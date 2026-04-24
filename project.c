@@ -183,7 +183,10 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
 funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
     //determining the values to be put into main ALU function using ALSUrc 
-    
+    switch(ALUSrc):
+        case 0:
+            ALU(data1,data2,ALUp,funt,*Zero); 
+            break;
 
     //check if ALUresult is empty 
     if(ALUresult==NULL)
