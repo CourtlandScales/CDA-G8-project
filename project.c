@@ -209,16 +209,56 @@ funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsigned
 *memdata,unsigned *Mem)
 {
+    // Validate memory address
+  if ((ALUresult & 3) != 0 || ALUresult > 0xFFFF) {
+    return 1;
+  }
+
+  unsigned int index = ALUresult >> 2;
+  if (MemRead == 1) {
+    *memdata = Mem[index];
+  }
+
+  if (MemWrite == 1) {
+    Mem[index] = data2;
+  }
+
+  return 0;
 }
+
+
 /* Write Register */
 /* 10 Points */
 void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned
 ALUresult,char RegWrite,char RegDst,char MemtoReg,unsigned *Reg)
 {
+    if (!RegWrite) {
+    return;
+  }
+
+  unsigned dest = RegDst ? r3 : r2;
+  unsigned value = MemtoReg ? memdata : ALUresult;
+
+  Reg[dest] = value;
 }
+
+
 /* PC update */
 /* 10 Points */
 void PC_update(unsigned jsec,unsigned extended_value,char Branch,char Jump,char
 Zero,unsigned *PC)
 {
+    unsigned nextPC = *PC + 4;
+
+  // Branch
+  if (Branch && Zero) {
+    nextPC = nextPC + (extended_value << 2);
+  }
+
+  // Jump
+  if (Jump) {
+    nextPC = (nextPC & 0xF0000000) | (jsec << 2);
+  }
+
+  *PC = nextPC;
 }
