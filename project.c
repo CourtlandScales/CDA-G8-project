@@ -183,26 +183,27 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
 funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
     //since the operations later on are based on data2 and extended aswell as ALUSrc ALU will performed on them first
-    ALU(data2,extended_value,ALUrc,*AlUresult,*Zero); 
+    unsigned B = (ALUSrc == 1) ? extended_value : data2;
     
-    funct=*Zero; //saving the value for the use of determining the future operation
+    char ALUControl = ALUOp; //saving the value for the use of determining the future operation
     
     //determining the values to be put into main ALU function using ALSUrc 
     
-    switch(funct):
-        case 0://for the case of ALCrc begetting 0
-            ALU(data1,data2,ALUp,*AlUresult,*Zero);
-            break;
-        case 1://for the case of ALCrc begetting 1
-            ALU(data1,extended_value,ALUp,*AlUresult,*Zero);
-            break;
+    if (ALUOp == 7) {
+        switch (funct) {
+            case 32: ALUControl = 0; break; // add
+            case 34: ALUControl = 1; break; // sub
+            case 36: ALUControl = 4; break; // and
+            case 37: ALUControl = 5; break; // or
+            case 42: ALUControl = 2; break; // slt
+            case 43: ALUControl = 3; break; // sltu
+            default: return 1;              // Illegal funct Halt
+        }
+    }
             
-    //check if ALUresult is empty/ if there was a halt 
-    if(ALUresult==NULL)
-        return 1;
-    else
-        return 0;
-    
+     
+    ALU(data1, B, ALUControl, ALUresult, Zero);
+    return 0; 
 }
 /* Read / Write Memory */
 /* 10 Points */
