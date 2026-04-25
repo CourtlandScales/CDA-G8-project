@@ -2,7 +2,7 @@
 CDA 3103C: Computer Logic and Organization
 Dr. John Aedo
 Spring 2026
-Authors: Courtland Scales, Marco Morris
+Authors: Courtland Scales, Marco Morris, Carlos Garit
 Programming language: C
 Date: 4/8/2026 
 */
@@ -214,11 +214,12 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
     return 1;
   }
 
-  unsigned int index = ALUresult >> 2;
+  unsigned int index = ALUresult >> 2; 
+    // read memory
   if (MemRead == 1) {
     *memdata = Mem[index];
   }
-
+ // write memory into data
   if (MemWrite == 1) {
     Mem[index] = data2;
   }
@@ -232,11 +233,12 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
 void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned
 ALUresult,char RegWrite,char RegDst,char MemtoReg,unsigned *Reg)
 {
+    // if RegWrite is not available, halt
     if (!RegWrite) {
     return;
   }
 
-  unsigned dest = RegDst ? r3 : r2;
+  unsigned dest = RegDst ? r3 : r2; // register destination
   unsigned value = MemtoReg ? memdata : ALUresult;
 
   Reg[dest] = value;
@@ -248,14 +250,14 @@ ALUresult,char RegWrite,char RegDst,char MemtoReg,unsigned *Reg)
 void PC_update(unsigned jsec,unsigned extended_value,char Branch,char Jump,char
 Zero,unsigned *PC)
 {
-    unsigned nextPC = *PC + 4;
+    unsigned nextPC = *PC + 4; // Next instruction, jumps by 4's 
 
   // Branch
   if (Branch && Zero) {
     nextPC = nextPC + (extended_value << 2);
   }
 
-  // Jump
+  // Jump to any instruction
   if (Jump) {
     nextPC = (nextPC & 0xF0000000) | (jsec << 2);
   }
